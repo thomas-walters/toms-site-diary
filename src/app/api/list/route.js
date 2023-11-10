@@ -4,7 +4,6 @@
 import { supabase } from '../../lib/supabase'
 
 export async function GET() {
-
   try {
     let { data, error } = await supabase
       .from('diary_entries')

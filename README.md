@@ -42,7 +42,10 @@ Super easy to setup a deployment and most importantly, free!
 
 To run this project locally, first create a ```.env.local``` file inside the project root and add the follow environment variables
 ```
-xyz
+NEXT_PUBLIC_SUPABASE_URL=https://lrnarnzqfkrrlseklyns.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxybmFybnpxZmtycmxzZWtseW5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk0MjE4MDIsImV4cCI6MjAxNDk5NzgwMn0.WUabzZoLS2p0-wyrGFwIYqKO-yoaEaN5jM90KxrYBZ8
+UPLOADTHING_SECRET=sk_live_1163662a4ce8579b01d0fc7ca90ca955551623674b72c0fc1273bbcf624d5ae0
+UPLOADTHING_APP_ID=r07d83phdk
 ```
 
 Then, run the following commands in the terminal
@@ -75,13 +78,17 @@ Planned what my database schema would look like. I decided to go with one 'diary
 - images
 
 I could have also had another table for images that had each image link in its own record, and then linked to a diary entry via a Foreign Key, but instead decided to store links in an array in the one table for simplicity.
+
 #### Frontend Architecture Choices
 Decided to take advantage of the new App Router in Next.js 13. Works similarly to the previous Pages Router, but with some slight differences. I considered using a SPA type approach, but decided against it, as I thought the use of a dynamic URL to access a specific diary entry could be useful for users. I wanted to show my ability to create and use components, which I have done so with the DiaryList component displayed on the home page. Ideally more of the application would be broken down into components.
 
 
 
 ## Future Improvements and Completion
-- Better user feedback
+- Better user feedback e.g. Snackbars for successful save, rather than an alert.
 - Add Entry as a Modal
 - Pagination for the Diary Entries List endpoint and UI.
+- Sorting/Filtering for the List page.
+- Cleanup my Tailwind! Largely because I am unfamiliar and time constraints, I feel like my Tailwind code is a bit all over the place. Could definitely be cleaned up and take more advantage of classes. There are also some styling inconsistencies throughout the application this would help clean up.
+- On the Add entry page, make image uploads only happens when Submit is clicked, currently happens after files have been selected. This is potentially an issue if users upload images and then don't submit a diary entry, these images have now been uploaded and aren't being used.
 - Could possibly include some kind of caching for the diary entries so the endpoint does not have to be called every time the user navigates to a single entry and back to the main page.

@@ -15,6 +15,7 @@ function AddEntry() {
   const router = useRouter()
 
   const [uploadedFileUrls, setUploadedFileUrls] = useState()
+  const [submitDisabled, setSubmitDisabled] = useState(false)
 
   const handleSubmit = async (e) => {
     // Prevent page from refreshing on Submit click
@@ -46,7 +47,7 @@ function AddEntry() {
       <form onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-12">
               {/* date */}
               <div className="sm:col-span-3">
                 <label htmlFor="date" className="block text-sm font-medium leading-6 text-gray-900">
@@ -58,7 +59,7 @@ function AddEntry() {
                     name="date"
                     id="date"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md py-1 px-2 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -73,7 +74,7 @@ function AddEntry() {
                     id="weather"
                     name="weather"
                     required
-                    className=" capitalize block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    className="capitalize block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     {weatherOptions.map((weatherOption) => {
                       return (
@@ -95,7 +96,7 @@ function AddEntry() {
                     name="description"
                     rows={3}
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     defaultValue={''}
                   />
                 </div>
@@ -113,22 +114,22 @@ function AddEntry() {
                       <UploadButton
                         multiple
                         endpoint="diaryImageUploader"
+                        onUploadBegin={() => setSubmitDisabled(true)}
                         onClientUploadComplete={(res) => {
-                          console.log("Files: ", res);
-                          alert("Upload Completed");
-
                           const fileUrls = res.map(file => file.url);
                           setUploadedFileUrls(fileUrls)
+                          setSubmitDisabled(false)
+                          alert("Upload Completed");
                         }}
                         onUploadError={(error) => {
                           alert(`ERROR! ${error.message}`);
+                          setSubmitDisabled(false)
                         }}
                       />
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -142,13 +143,13 @@ function AddEntry() {
           </Link>
           <button
             type="submit"
-            className="rounded-md border-2 border-green-600 bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 hover:border-green-700"
+            disabled={submitDisabled}
+            className="disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none rounded-md border-2 border-green-600 bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 hover:border-green-700"
           >
             Submit
           </button>
         </div>
       </form>
-
     </>
   )
 }

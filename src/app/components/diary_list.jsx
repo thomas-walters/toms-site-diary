@@ -6,7 +6,6 @@ import { supabase } from '../lib/supabase';
 import Link from 'next/link';
 
 function DiaryList() {
-
   const [entriesData, setEntriesData] = useState();
 
   useEffect(() => {
@@ -35,7 +34,7 @@ function DiaryList() {
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm font-semibold leading-6 text-gray-900">{new Date(entry.date).toLocaleDateString()}</p>
-                  <p className="mt-1 truncate text-xs leading-5 text-gray-500">{`${entry.weather}, ${entry.description}`}</p>
+                  <p className="mt-1 truncate text-xs leading-5 text-gray-500 text-transform:capitalize">{`${entry.weather} - ${entry.description}`}</p>
                 </div>
               </div>
               <div>
@@ -47,7 +46,10 @@ function DiaryList() {
                 </Link>
               </div>
             </li>
-          )) : ''}
+          ))
+          :
+          ''
+        }
       </ul>
     </>
   )
