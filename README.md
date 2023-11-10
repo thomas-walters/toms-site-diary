@@ -1,41 +1,87 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Tom's Site Diary
 
-First, run the development server:
+A Site Diary is a critical document used on construction sites. It's a daily record of activities, events and occurrences on-site. This diary serves as a legal document and is essential for effective project management and accountability.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Tom's Site Diary features a List Page, a View Page and a Create Page. Each diary entry contains a Date, Description, Weather and Images.
+
+
+## Demo
+
+[Vercel Deployment](https://www.github.com/thomas-walters)
+
+
+## Technical Choices
+
+**Frontend:** ReactJs and NextJs
+
+Personally comfortable using these and are both great choices for a modern, efficient and scalable web application.
+
+**Styling:** TailwindCSS
+
+I was originally going to use Material-UI given the time constraints, as it is what I am more comfortable using, however I decided to go with Tailwind after having used it recently and really enjoy the ease for mobile first design.
+
+**Backend:** Supabase
+
+My backend functionality is handled within Supabase, however I have included a sample endpoint using the NextJs Route Handlers
+
+**Database:** Supabase
+
+This was my first time using Supbase, so I decided to have a go at it after it was suggested. I found it super easy to setup and integrate into the project and thoroughly enjoyed using it.
+
+**Image Upload**
+UploadThing
+
+Again, completly new to this.
+
+**Deployment**
+Vercel
+
+Super easy to setup a deployment and most importantly, free!
+## Running locally
+
+To run this project locally, first create a ```.env.local``` file inside the project root and add the follow environment variables
+```
+xyz
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, run the following commands in the terminal
+```bash
+  git clone https://github.com/iaincollins/nextjs-starter.git
+  npm install
+  npm run build
+  npm run start
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Authors
 
-## Learn More
+- [@thomas-walters](https://www.github.com/thomas-walters)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Approach
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Planning
+My first step was to read through the provided document and gather all of the requirements. This included things like required pages, required fields in forms, mobile optimisation etc.
+#### Tech Stack Choice
+Analysed which technologies would be best suited for the application, with my choices explained above.
+#### Wireframing
+Drafted some low-fidelity wireframes with pen and paper, showing the basics of each page. This was helpful for me considering the need for a responsive design given the mobile optimisation requirements of the application.
+#### Database Schema
+Planned what my database schema would look like. I decided to go with one 'diary_entries' table which had the following columns:
+- database
+- description
+- weather
+- images
 
-## Deploy on Vercel
+I could have also had another table for images that had each image link in its own record, and then linked to a diary entry via a Foreign Key, but instead decided to store links in an array in the one table for simplicity.
+#### Frontend Architecture Choices
+Decided to take advantage of the new App Router in Next.js 13. Works similarly to the previous Pages Router, but with some slight differences. I considered using a SPA type approach, but decided against it, as I thought the use of a dynamic URL to access a specific diary entry could be useful for users. I wanted to show my ability to create and use components, which I have done so with the DiaryList component displayed on the home page. Ideally more of the application would be broken down into components.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-=======
-# toms-site-diary
-Tom's Site Diary
->>>>>>> 5bebd4c6f2c0875d936ef351f3ab7933cd68e3fd
+
+## Future Improvements and Completion
+- Better user feedback
+- Add Entry as a Modal
+- Pagination for the Diary Entries List endpoint and UI.
+- Could possibly include some kind of caching for the diary entries so the endpoint does not have to be called every time the user navigates to a single entry and back to the main page.

@@ -1,8 +1,9 @@
 "use client"
-import React from 'react'
 import Link from 'next/link'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/navigation'
+import { UploadButton } from '../utils/uploadthing'
+import { useState } from 'react'
 
 const weatherOptions = [
   "sunny",
@@ -13,22 +14,25 @@ const weatherOptions = [
 function AddEntry() {
   const router = useRouter()
 
-  
+  const [uploadedFileUrls, setUploadedFileUrls] = useState()
+
   const handleSubmit = async (e) => {
+    // Prevent page from refreshing on Submit click
     e.preventDefault()
-    
+
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    
+
     const submitData = async () => {
       try {
         const { error } = await supabase
           .from('diary_entries')
-          .insert({date: formProps.date, description: formProps.description, weather: formProps.weather})
+          .insert({ date: formProps.date, description: formProps.description, weather: formProps.weather, images: uploadedFileUrls })
         if (error) {
           throw error;
         }
         alert('Saved!')
+        // Redirect User to List screen after saving
         router.push('/')
       } catch (error) {
         console.error('Error fetching data from Supabase:', error.message);
@@ -74,8 +78,8 @@ function AddEntry() {
                     {weatherOptions.map((weatherOption) => {
                       return (
                         <option>{weatherOption}</option>
-  )
-})}
+                      )
+                    })}
                   </select>
                 </div>
               </div>
@@ -106,23 +110,20 @@ function AddEntry() {
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
                     <div className="mt-4 flex text-sm leading-6 text-gray-600">
-
-                      {/* <input id="images" name="images" type="file" className="sr-only" /> */}
-                      <input name="images" id="images" type="file" multiple />
-
-                      {/* <UploadButton
+                      <UploadButton
                         multiple
-                        endpoint="imageUploader"
-                        // onClientUploadComplete={(res) => {
-                        //   // Do something with the response
-                        //   console.log("Files: ", res);
-                        //   alert("Upload Completed");
-                        // }}
-                        // onUploadError={(error) => {
-                        //   // Do something with the error.
-                        //   alert(`ERROR! ${error.message}`);
-                        // }}
-                      /> */}
+                        endpoint="diaryImageUploader"
+                        onClientUploadComplete={(res) => {
+                          console.log("Files: ", res);
+                          alert("Upload Completed");
+
+                          const fileUrls = res.map(file => file.url);
+                          setUploadedFileUrls(fileUrls)
+                        }}
+                        onUploadError={(error) => {
+                          alert(`ERROR! ${error.message}`);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -144,7 +145,7 @@ function AddEntry() {
             className="rounded-md border-2 border-green-600 bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 hover:border-green-700"
           >
             Submit
-            </button>
+          </button>
         </div>
       </form>
 

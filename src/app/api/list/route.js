@@ -1,7 +1,7 @@
 // Note: This endpoint is not being used, this is just an example of a Route Handler.
 // (NextJS API routes with the new App Router)
 
-import { supabase } from '@/app/lib/supabase';
+import { supabase } from '../../lib/supabase'
 
 export async function GET() {
 
