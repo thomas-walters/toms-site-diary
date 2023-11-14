@@ -4,16 +4,18 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase';
 import Link from 'next/link';
+import { useBuilder } from '../../contexts/builderContext';
 
 function DiaryList() {
+  const builder = useBuilder()
   const [entriesData, setEntriesData] = useState();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         let { data: diary_entries, error } = await supabase
           .from('diary_entries')
           .select('*')
+          .eq('builders_id', builder.builderId)
 
         if (error) {
           throw error;
@@ -23,7 +25,7 @@ function DiaryList() {
       }
     };
     fetchData();
-  }, []);
+  }, [builder.builderId]);
 
   return (
     <>
